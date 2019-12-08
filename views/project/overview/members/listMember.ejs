@@ -1,0 +1,56 @@
+<%- include("./partials/header.ejs", {active: "Project Detail"}) %>
+<%- include("../overview_partials/header.ejs", {active: "Overview"}) %>
+
+
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2">Edit Members for : #<%= data[0].projectid %> <%= data[0].name %></h1>
+</div>
+<div class="card">
+  <h5 class="card-header">Filter</h5>
+  <div class="card-body">
+
+  </div>
+</div>
+
+<br>
+
+<div class="card">
+  <h5 class="card-header">Options</h5>
+  <div class="card-body">
+
+  </div>
+</div>
+
+<br>
+
+<div class="table-responsive">
+  <table class="table table-stripped">
+    <thead class="thead-dark">
+      <tr>
+        <th>User ID</th>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% data.forEach((item, index)=>{ %>
+      <tr>
+        <td> <%= item.userid %> </td>
+        <td> <%= item.firstname + item.lastname%> </td>
+        <td></td>
+        <td>
+          <a href="/projects/members/<%= item.projectid %>/<%= item.userid %>/edit" class="btn btn-success">Edit</a>
+          <a href="" class="btn btn-danger">Delete</a>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<a href="/projects/members/<%= data[0].projectid %>/add" class="btn btn-primary">Add Member</a>
+
+<%- include("../overview_partials/footer.ejs") %>
+<%- include("./partials/footer.ejs") %>

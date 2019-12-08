@@ -1,0 +1,42 @@
+<%- include("./partials/header.ejs", {active: "Project Detail"}) %>
+<%- include("./overview_partials/header.ejs", {active: "Overview"}) %>
+
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2">Overview</h1>
+</div>
+<h4>#<%= data[0].projectid %> <%= data[0].name %></h4>
+<div class="card">
+  <h6 class="card-header">Issue Tracking</h6>
+  <div class="card-body">
+    <ul class="list-group">
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        Bug
+        <span class="badge badge-warning"><%= bugOpen %> Open / <%= bugTotal %></span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        Feature
+        <span class="badge badge-dark"><%= featureOpen %> Open / <%= featureTotal %></span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        Support
+        <span class="badge badge-success"><%= supportOpen %> Open / <%= supportTotal %></span>
+      </li>
+    </ul>
+  </div>
+</div>
+<br>
+<div class="card">
+  <h6 class="card-header">Members</h6>
+  <div class="card-body">
+    <ul class="list-group">
+      <% data.forEach((item, index)=>{ %>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <%= item.firstname + item.lastname %></li>
+      <% })%>
+    </ul>
+  </div>
+</div>
+
+<%- include("./overview_partials/footer.ejs") %>
+<%- include("./partials/footer.ejs") %>

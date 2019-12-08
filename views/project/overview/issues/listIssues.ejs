@@ -1,0 +1,86 @@
+<%- include("./partials/header.ejs", {active: "Project Detail"}) %>
+<%- include("../overview_partials/header.ejs", {active: "Overview"}) %>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2">Issues</h1>
+</div>
+<div class="card">
+  <h5 class="card-header">Filters</h5>
+  <div class="card-body">
+
+  </div>
+</div>
+<br>
+<div class="card">
+  <h5 class="card-header">Otions</h5>
+  <div class="card-body">
+
+  </div>
+</div>
+<br>
+<div class="table-responsive">
+  <table class="table table-stripped">
+    <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>Tracker</th>
+        <th>Subject</th>
+        <th>Description</th>
+        <th>Status</th>
+
+        <th>Priority</th>
+        <th>Assignee</th>
+        <th>Start Date</th>
+        <th>Due Date</th>
+        <th>Estimated Time (hours)</th>
+
+        <th>Done (%)</th>
+        <th>File</th>
+        <th>Spent Time (hours)</th>
+        <th>Target Version</th>
+        <th>Author</th>
+
+        <th>Created Date</th>
+        <th>Updated Date</th>
+        <th>Closed Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% issues.forEach((item, index)=>{ %>
+      <tr>
+          <td><%= item.issueid %></td>
+          <td><%= item.tracker %></td>
+          <td><%= item.subject %></td>
+          <td><%= item.description %></td>
+          <td><%= item.status %></td>
+
+          <td><%= item.priority %></td>
+          <td><%= item.assignee %></td>
+          <td><%= item.issueid %></td>
+          <td><%= item.duedate %></td>
+          <td><%= item.estimatedtime %></td>
+
+          <td><%= item.done %></td>
+          <td><%= item.file %></td>
+          <td><%= item.spenttime %></td>
+          <td><%= item.targetversion %></td>
+          <td><%= item.author %></td>
+
+          <td><%= item.createddate %></td>
+          <td><%= item.updateddate %></td>
+          <td><%= item.closeddate %></td>
+          <td> <a href="" class="btn btn-success">Edit</a> <a href="" class="btn btn-danger">Delete</a></td>
+
+      </tr>
+      <% })%>
+    </tbody>
+  </table>
+</div>
+
+<a href="/projects/issues/<%= data[0].projectid %>/add" class="btn btn-primary">Add</a>
+
+
+
+<%- include("../overview_partials/footer.ejs") %>
+<%- include("./partials/footer.ejs") %>

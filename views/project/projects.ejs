@@ -1,0 +1,120 @@
+<%- include("./partials/header.ejs", {active: "Projects"}) %>
+
+<div class="container">
+    <h3>Projects</h3>
+    <hr>
+    <!-- Filters -->
+    <div class="card">
+        <h5 class="card-header">Filters</h5>
+        <div class="card-body">
+            <form action="/" method="get">
+
+                <!-- ID -->
+                <div class="form-group row">
+                    <div class="col-sm-3 custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="idcheck">
+                        <label class="custom-control-label" for="idcheck" name="idcheck">ID</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control float-right" id="inputString" name="id" placeholder="ID">
+                    </div>
+                </div>
+
+                <!-- STRING -->
+                <div class="form-group row">
+                    <div class="col-sm-3 custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="namecheck">
+                        <label class="custom-control-label" for="namecheck" name="namecheck">Name</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputString" name="name" placeholder="Name">
+                    </div>
+                </div>
+
+                <!-- MEMBER -->
+                <div class="form-group row">
+                    <div class="col-sm-3 custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="membercheck">
+                        <label class="custom-control-label" for="membercheck" name="membercheck">Member</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inputString" name="member" placeholder="Member">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <br>
+    <!-- OPTIONS -->
+    <div class="card">
+        <h5 class="card-header">Options</h5>
+        <div class="card-body">
+            <form action="" method="post">
+                <div class="form-group row">
+                    <!-- OPTIONS TITLE -->
+                    <label class="col-sm-3">Columns</label>
+                    <!-- OPTIONS CHOICES -->
+                    <div class="form-group col-sm-2">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="idcolumn">
+                            <label class="custom-control-label" for="idcolumn" name="idcolumn">ID</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="namecolumn">
+                            <label class="custom-control-label" for="namecolumn" name="namecolumn">Name</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="membercolumn">
+                            <label class="custom-control-label" for="membercolumn" name="membercolumn">Members</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Apply</button>
+            </form>
+        </div>
+    </div>
+
+    <br>
+    <!-- TABLE -->
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Members</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% data.forEach((item, index)=>{ %>
+                <tr>
+                    <td> <a href="/projects/overview/<%= item.projectid %>" class="btn btn-dark">
+                            <%= item.projectid %></a>
+                    </td>
+                    <td> <%= item.projectname %></td>
+                    <td> <%= item.fullname %> </td>
+                    <td>
+                        <a href="/projects/edit/<%= item.projectid %>" class="btn btn-success" id="">Edit</a>
+                        <a href="/projects/delete/<%= item.projectid %>" class="btn btn-danger" id="">Delete</a>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
+        <nav aria-label="table">
+            <ul class="pagination">
+        </nav>
+
+        <!-- ADD BUTTON -->
+        <a href="/projects/add" class="btn btn-primary">Add Project</a>
+        </form>
+    </div>
+</div>
+
+<%- include("./partials/footer.ejs") %>

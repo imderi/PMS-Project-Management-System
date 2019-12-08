@@ -1,0 +1,71 @@
+<%- include("./partials/header.ejs", {active: "Profile"})%>
+
+
+<!-- FORMULIR -->
+<div class="container">
+    <h3>Profile</h3>
+    <hr>
+    <div class="card">
+        <h5 class="card-header">Edit Profile</h5>
+        <div class="card-body">
+            <form action="/profile/update" method="post">
+                <!-- EMAIL -->
+                <div class="form-group row">
+                    <label for="email" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" name="" id="email" value="<%= profile.email %>"
+                            readonly>
+                    </div>
+                </div>
+
+                <!-- PASSWORD -->
+                <div class="form-group row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="inputPassword" name="password"
+                            placeholder="Password">
+                    </div>
+                </div>
+
+                <!-- POSITION TITLE -->
+                <div class="form-group row">
+                    <label class="col-sm-2">Position</label>
+                    <!-- POSITION CHOICES -->
+                    <div class="form-group col-sm-3">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="idcolumn" name="position"
+                                value="Manager">
+                            <label class="custom-control-label" for="idcolumn">Manager</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="namecolumn" name="position"
+                                value="Software Developer">
+                            <label class="custom-control-label" for="namecolumn">Software Developer</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="membercolumn" name="position"
+                                value="Quality Assurance">
+                            <label class="custom-control-label" for="membercolumn">Quality Assurance</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TYPE -->
+                <div class="form-group row">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Type</label>
+                    <div class="col-sm-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="position" id="">
+                            <label class="form-check-label" for="position">Fulltime</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- UPDATE BUTTON -->
+                <button class="btn btn-primary">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include("./partials/footer.ejs")%>

@@ -1,0 +1,77 @@
+<%- include("./partials/header.ejs", {active: "Users"}) %>
+<div class="container">
+  <h3>Add User</h3>
+  <hr>
+  <div class="card">
+    <div class="card-body">
+      <form action="/users/add-user" method="post">
+
+        <!-- FIRST NAME -->
+        <div class="form-group row">
+          <label for="firstname" class="col-sm-2 col-form-label">First Name</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="firstname" id="firstname" placeholder="First Name" />
+          </div>
+        </div>
+
+        <!-- LAST NAME -->
+        <div class="form-group row">
+          <label for="lastname" class="col-sm-2 col-form-label">Last Name</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Last Name" />
+          </div>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="form-group row">
+          <label for="email" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" name="email" id="email" placeholder="Email" />
+          </div>
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="form-group row">
+          <label for="password" class="col-sm-2 col-form-label">Password</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" name="password" id="password" placeholder="Password" />
+          </div>
+        </div>
+
+        <!-- POSITION -->
+        <div class="form-group row">
+          <label class="col-sm-2">Position</label>
+          <!-- POSITION CHOICES -->
+          <div class="form-group col-sm-3">
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="manager" name="position" value="Manager">
+              <label class="custom-control-label" for="manager">Manager</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="softdev" name="position" value="Software Developer">
+              <label class="custom-control-label" for="softdev">Software Developer</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="qa" name="position" value="Quality Assurance">
+              <label class="custom-control-label" for="qa">Quality Assurance</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- JOB TYPE -->
+        <div class="form-group row">
+          <label class="col-sm-2">Job Type</label>
+          <div class="form-group col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="jobtype" name="jobtype" value="true">
+              <label class="custom-control-label" for="jobtype">Full Time</label>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+      </form>
+    </div>
+  </div>
+</div>
+<%- include("./partials/footer.ejs") %>

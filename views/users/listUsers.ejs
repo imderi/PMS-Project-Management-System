@@ -1,0 +1,146 @@
+<%- include("./partials/header.ejs", {active: "Users"}) %>
+
+<div class="container">
+  <h3>Users</h3>
+  <!-- FILTERS -->
+  <div class="card">
+    <h5 class="card-header">Filters</h5>
+    <div class="card-body">
+      <form action="/" method="get">
+
+        <!-- ID -->
+        <div class="form-group row">
+          <div class="col-sm-3 custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="idcheck">
+            <label class="custom-control-label" for="idcheck" name="idcheck">User ID</label>
+          </div>
+          <div class="col-sm-9">
+            <input type="text" class="form-control float-right" id="" name="id" placeholder="ID">
+          </div>
+        </div>
+
+        <!-- STRING -->
+        <div class="form-group row">
+          <div class="col-sm-3 custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="namecheck">
+            <label class="custom-control-label" for="namecheck" name="namecheck">Full Name</label>
+          </div>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="" name="name" placeholder="Full Name">
+          </div>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="form-group row">
+          <div class="col-sm-3 custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="membercheck">
+            <label class="custom-control-label" for="membercheck" name="membercheck">Email</label>
+          </div>
+          <div class="col-sm-9">
+            <input type="email" class="form-control" id="" name="member" placeholder="Email">
+          </div>
+        </div>
+
+        <!-- POSITION -->
+        <div class="form-group row">
+          <div class="col-sm-3 custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="positioncheck">
+            <label class="custom-control-label" for="positoncheck" name="positioncheck">Position</label>
+          </div>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="" name="position" placeholder="Position">
+          </div>
+        </div>
+
+        <!-- JOB TYPE -->
+        <div class="form-group row">
+          <div class="col-sm-3 custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="membercheck">
+            <label class="custom-control-label" for="membercheck" name="membercheck">Job Type</label>
+          </div>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputString" name="member" placeholder="Job Type">
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <br>
+  <!-- OPTIONS -->
+  <div class="card">
+    <h5 class="card-header">Options</h5>
+    <div class="card-body">
+      <form action="" method="post">
+        <div class="form-group row">
+          <!-- OPTIONS TITLE -->
+          <label class="col-sm-3">Columns</label>
+          <!-- OPTIONS CHOICES -->
+          <div class="form-group col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="useridcolumn">
+              <label class="custom-control-label" for="useridcolumn" name="useridcolumn">User ID</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="fullnamecolumn">
+              <label class="custom-control-label" for="fullnamecolumn" name="fullnamecolumn">Full Name</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="emailcolumn">
+              <label class="custom-control-label" for="emailcolumn" name="emailcolumn">Email</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="positioncolumn">
+              <label class="custom-control-label" for="positioncolumn" name="positioncolumn">Position</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="jobtypecolumn">
+              <label class="custom-control-label" for="jobtypecolumn" name="jobtypecolumn">Job Type</label>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Apply</button>
+      </form>
+    </div>
+  </div>
+
+  <br>
+  <!-- USERS TABLE -->
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>User ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Position</th>
+          <th>Job Type</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% users.forEach((item, index)=>{ %>
+        <tr>
+          <td><%=item.userid%></td>
+          <td><%=item.firstname%></td>
+          <td><%=item.lastname%></td>
+          <td><%=item.email%></td>
+          <td></td>
+          <td></td>
+          <td>
+            <a href="/users/edit/<%= item.userid %>" class="btn btn-success" id="">Edit</a>
+            <a href="/users/delete/<%= item.userid %>" class="btn btn-danger" id="">Delete</a>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  <a href="/users/adduser" class="btn btn-primary">Add User</a>
+</div>
+<%- include("./partials/footer.ejs") %>

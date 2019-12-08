@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- BOOTSTRAP -->
+    <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- CSS -->
+    <!-- <link rel="stylesheet" href="stylesheets/style.css"> -->
+    <!-- CUSTOM CSS DARI BOOTSTRAP UNTUK SIDEBAR -->
+
+    <!-- ICON MATERIALIZE -->
+    
+
+
+    <!-- FAVICON -->
+    <link rel="icon" href="https://i.ibb.co/D8Ngn7c/icon.png">
+    <title><%= title %></title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/projects">
+            <img src="https://i.ibb.co/D8Ngn7c/icon.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            PMS
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li <%if(active=="Projects"){%>class="nav-item active" <%}%> >
+                    <a class="nav-link" href="/projects">Projects <span class="sr-only">(current)</span></a>
+                </li>
+                <li <%if(active=="Profile"){%>class="nav-item active" <%}%> >
+                    <a class="nav-link" href="/profile">Profile <span class="sr-only">(current)</span></a>
+                </li>
+                <li <%if(active=="Users"){%>class="nav-item active" <%}%> >
+                    <a class="nav-link" href="/users">Users <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <a href="/logout" class="btn btn-outline-danger my-2 my-sm-0">Log out</a>
+        </div>
+    </nav>

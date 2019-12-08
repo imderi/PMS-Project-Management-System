@@ -1,0 +1,35 @@
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+
+          <li class="nav-item">
+            <a class="nav-link active" href="/projects/overview/<%= data[0].projectid %>">
+              <span data-feather="home"></span>
+              <p>Overview</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/projects/activity/<%= data[0].projectid %>">
+              <p>Activity</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/projects/members/<%= data[0].projectid %>">
+              <p>Members</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/projects/issues/<%= data[0].projectid %>">
+              <p>Issues</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">

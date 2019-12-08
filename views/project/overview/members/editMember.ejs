@@ -1,0 +1,43 @@
+<%- include("./partials/header.ejs", {active: "Project Detail"}) %>
+
+<div class="container">
+  <br>
+  <div class="card">
+    <h5 class="card-header">Edit member on : #</h5>
+    <div class="card-body">
+      <!-- MEMBER DROPDOWN -->
+      <div class="form-group row">
+        <div class="col-sm-2 col-from-label">
+          <label for="">Member</label>
+        </div>
+        <div class="col-sm-8 col-form-label">
+            <input type="text" class="form-control" name="projectname" id="projectNameId"
+            value="TEST" readonly/>
+        </div>
+      </div>
+
+      <!-- POSITION -->
+      <div class="form-group row">
+        <div class="col-sm-2 col-form-label">
+          <label for="">Position</label>
+        </div>
+        <div class="col-sm-8">
+          <div class="col-sm-8 col-form-label">
+            <input class="form-check-input" type="radio" name="position"> <label class="form-check-label"
+              for="idcheck">Manager</label>
+          </div>
+          <div class="col-sm-8 col-form-label">
+            <input class="form-check-input" type="radio" name="position"> <label class="form-check-label"
+              for="namecheck">Software Developer</label>
+          </div>
+          <div class="col-sm-8 col-form-label">
+            <input class="form-check-input" type="radio" name="position"> <label class="form-check-label"
+              for="memberscheck">Quality Assurance</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include("./partials/footer.ejs") %>

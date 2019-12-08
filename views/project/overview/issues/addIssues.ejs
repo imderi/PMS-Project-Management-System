@@ -1,0 +1,177 @@
+<%- include("./partials/header.ejs", {active: "Project Detail"}) %>
+
+<div class="container">
+  <br>
+  <div class="card">
+    <h5 class="card-header">Add issues to project</h5>
+    <div class="card-body">
+      <form action="/projects/issues/<%= data[0].projectid %>/add-save" method="post">
+
+        <!-- TRACKER TITLE -->
+        <div class="form-group row">
+          <label class="col-sm-3">Tracker</label>
+          <!-- TRACKER CHOICES -->
+          <div class="form-group col-sm-2">
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="idcolumn" name="tracker" value="Bug" >
+              <label class="custom-control-label" for="idcolumn">Bug</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="namecolumn" name="tracker" value="Feature">
+              <label class="custom-control-label" for="namecolumn">Feature</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="membercolumn" name="tracker" value="Support">
+              <label class="custom-control-label" for="membercolumn">Support</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBJECT -->
+        <div class="form-group row">
+          <label for="subject" class="col-sm-3 col-form-label">Subject</label>
+          <div class="col-sm">
+            <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" >
+          </div>
+        </div>
+
+        <!-- DESCRIPTION -->
+        <div class="form-group row">
+          <label for="description" class="col-sm-3 col-form-label">Description</label>
+          <div class="col-sm">
+            <textarea class="form-control" id="description" name="description" rows="3"
+              placeholder="Description"></textarea>
+          </div>
+        </div>
+
+        <!-- STATUS TITLE -->
+        <div class="form-group row">
+          <label class="col-sm-3">Status</label>
+          <!-- STATUS CHOICES -->
+          <div class="form-group col-sm">
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="new" name="status" value="New" >
+              <label class="custom-control-label" for="new" name="new">New</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="inprogres" name="status" value="In Progres">
+              <label class="custom-control-label" for="inprogres" name="inprogres">In Progress</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="resolved" name="status" value="Resolved">
+              <label class="custom-control-label" for="resolved">Resolved</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="feedback" name="status" value="Feedback">
+              <label class="custom-control-label" for="feedback">Feedback</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="closed" name="status" value="Closed">
+              <label class="custom-control-label" for="closed">Closed</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="rejected" name="status" value="Rejected">
+              <label class="custom-control-label" for="rejected">Rejected</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- PRIORITY -->
+        <div class="form-group row">
+          <label class="col-sm-3">Priority</label>
+          <!-- PRIORITY CHOICES -->
+          <div class="form-group col-sm-2">
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="normal" name="priority" value="Normal" >
+              <label class="custom-control-label" for="normal">Normal</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="high" name="priority" value="High">
+              <label class="custom-control-label" for="high">High</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="urgent" name="priority" value="Urgent">
+              <label class="custom-control-label" for="urgent">Urgent</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="immediate" name="priority" value="Immediate">
+              <label class="custom-control-label" for="immediate">Immediate</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- ASSIGNEE -->
+        <div class="form-group row">
+          <label class="col-sm-3">Assignee</label>
+          <div class="form-group col-sm">
+            <select class="form-control" id="exampleFormControlSelect1" name="assignee">
+              <% data.forEach((item, index)=>{ %>
+              <option value="<%= item.userid %>"> <%= item.firstname + item.lastname %> </option>
+              <% }) %>
+            </select>
+          </div>
+        </div>
+
+        <!-- START DATE -->
+        <div class="form-group row">
+          <label class="col-sm-3">Start Date</label>
+          <div class="form-group col-sm-5">
+            <input class="form-control" type="date" name="startdate" id="" >
+          </div>
+        </div>
+
+        <!-- DUE DATE -->
+        <div class="form-group row">
+          <label class="col-sm-3">Due Date</label>
+          <div class="form-group col-sm-5">
+            <input class="form-control" type="date" name="duedate" id="" >
+          </div>
+        </div>
+
+        <!-- ESTIMATED TIME -->
+        <div class="form-group row">
+          <label class="col-sm-3">Estimated Time (Hours)</label>
+          <div class="form-group col-sm-5">
+            <input class="form-control" type="number" name="estimatedtime" id="" >
+          </div>
+        </div>
+
+        <!-- DONE PERCENTAGE -->
+        <div class="form-group row">
+          <label class="col-sm-3">Done (%)</label>
+          <div class="form-group col-sm-5">
+            <select class="form-control" id="exampleFormControlSelect1" name="done">
+              <option>0</option value="0">
+              <option>10</option value="10">
+              <option>20</option value="20">
+              <option>30</option value="30">
+              <option>40</option value="40">
+              <option>50</option value="50">
+              <option>60</option value="60">
+              <option>70</option value="70">
+              <option>80</option value="80">
+              <option>90</option value="90">
+              <option>100</option value="100">
+            </select>
+          </div>
+        </div>
+
+        <!-- FILES -->
+        <div class="form-group row">
+          <label class="col-sm-3">Files</label>
+          <div class="form-group col-sm-5">
+            <div class="custom-control custom-checkbox">
+              <input type="file" class="custom-file-input" id="customFile" name="file">
+              <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Apply</button>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include("./partials/footer.ejs") %>
