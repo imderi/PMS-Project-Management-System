@@ -5,6 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 // SESSION
 var session = require("express-session");
+// FLASH
+var flash = require('connect-flash')
+
 
 // POSTGRE DB CONNECTION
 const { Pool } = require('pg')
@@ -40,6 +43,8 @@ app.use(
     saveUninitialized: true
   })
 );
+// FLASH FUNCTION
+app.use(flash())
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

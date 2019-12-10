@@ -1,35 +1,41 @@
-<div class="container-fluid">
-  <div class="row">
-    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-      <div class="sidebar-sticky">
-        <ul class="nav flex-column">
+        <!DOCTYPE html>
 
-          <li class="nav-item">
-            <a class="nav-link active" href="/projects/overview/<%= data[0].projectid %>">
-              <span data-feather="home"></span>
-              <p>Overview</p>
-            </a>
-          </li>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+          <meta name="description" content="">
+          <meta name="author" content="">
+          <!-- Bootstrap core CSS -->
+          <link
+            href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css"
+            rel="stylesheet">
+          <!-- Custom styles for this template -->
+          <link href="https://blackrockdigital.github.io/startbootstrap-simple-sidebar/css/simple-sidebar.css"
+            rel="stylesheet">
+        </head>
 
-          <li class="nav-item">
-            <a class="nav-link" href="/projects/activity/<%= data[0].projectid %>">
-              <p>Activity</p>
-            </a>
-          </li>
+        <body>
 
-          <li class="nav-item">
-            <a class="nav-link" href="/projects/members/<%= data[0].projectid %>">
-              <p>Members</p>
-            </a>
-          </li>
+          <div class="d-flex" id="wrapper">
+            <!-- Sidebar -->
+            <div class="bg-light border-right" id="sidebar-wrapper">
+              <div class="sidebar-heading">Project Menu </div>
+              <div class="list-group list-group-flush">
+                <a href="/projects/overview/<%= data[0].projectid %>"
+                  class="list-group-item list-group-item-action bg-light">Overview</a>
+                <a href="/projects/activity/<%= data[0].projectid %>"
+                  class="list-group-item list-group-item-action bg-light">Activity</a>
+                <a href="/projects/members/<%= data[0].projectid %>"
+                  class="list-group-item list-group-item-action bg-light">Members</a>
+                <a href="/projects/issues/<%= data[0].projectid %>"
+                  class="list-group-item list-group-item-action bg-light">Issues</a>
+              </div>
+            </div>
+            <!-- /#sidebar-wrapper -->
 
-          <li class="nav-item">
-            <a class="nav-link" href="/projects/issues/<%= data[0].projectid %>">
-              <p>Issues</p>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <!-- Page Content -->
+            <div id="page-content-wrapper">
+              <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
+                <button class="btn btn-primary btn-sm" id="menu-toggle">🏠 Menu</button>
+              </nav>
+              <div class="container">

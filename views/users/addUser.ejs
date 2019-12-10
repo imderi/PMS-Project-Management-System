@@ -34,7 +34,7 @@
         <div class="form-group row">
           <label for="password" class="col-sm-2 col-form-label">Password</label>
           <div class="col-sm-10">
-            <input type="password" class="form-control" name="password" id="password" placeholder="Password" />
+            <input type="password" class="form-control" name="password" id="password" placeholder="Password" required/>
           </div>
         </div>
 
@@ -62,12 +62,17 @@
         <div class="form-group row">
           <label class="col-sm-2">Job Type</label>
           <div class="form-group col-sm-3">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="jobtype" name="jobtype" value="true">
-              <label class="custom-control-label" for="jobtype">Full Time</label>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="jobtype1" name="jobtype" value="Full Time">
+              <label class="custom-control-label" for="jobtype1">Full Time</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" id="jobtype2" name="jobtype" value="Part Time">
+              <label class="custom-control-label" for="jobtype2">Part Time</label>
             </div>
           </div>
         </div>
+
 
         <button type="submit" class="btn btn-primary">Save</button>
       </form>

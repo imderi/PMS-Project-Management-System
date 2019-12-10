@@ -4,7 +4,7 @@
   <hr>
   <div class="card">
     <div class="card-body">
-      <form action="/users/edit-user-save" method="post">
+      <form action="/users/edit/<%= user.userid %>/save" method="post">
 
         <!-- FIRST NAME -->
         <div class="form-group row">
@@ -34,7 +34,7 @@
         <div class="form-group row">
           <label for="password" class="col-sm-2 col-form-label">Password</label>
           <div class="col-sm-10">
-            <input type="password" class="form-control" name="password" id="password" placeholder="Password" />
+            <input type="password" class="form-control" name="password" id="password" placeholder="Password" required/>
           </div>
         </div>
 
@@ -44,15 +44,15 @@
           <!-- POSITION CHOICES -->
           <div class="form-group col-sm-3">
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" id="manager" name="position" value="Manager">
+              <input type="radio" class="custom-control-input" id="manager" name="position" value="Manager"<%= user.position == "Manager" ? "checked" : "" %>>
               <label class="custom-control-label" for="manager">Manager</label>
             </div>
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" id="softdev" name="position" value="Software Developer">
+              <input type="radio" class="custom-control-input" id="softdev" name="position" value="Software Developer" <%= user.position == "Software Developer" ? "checked" : "" %>>
               <label class="custom-control-label" for="softdev">Software Developer</label>
             </div>
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" id="qa" name="position" value="Quality Assurance">
+              <input type="radio" class="custom-control-input" id="qa" name="position" value="Quality Assurance" <%= user.position == "Quality Assurance" ? "checked" : "" %>>
               <label class="custom-control-label" for="qa">Quality Assurance</label>
             </div>
           </div>
@@ -60,14 +60,18 @@
 
         <!-- JOB TYPE -->
         <div class="form-group row">
-          <label class="col-sm-2">Job Type</label>
-          <div class="form-group col-sm-3">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="jobtype" name="jobtype" value="true">
-              <label class="custom-control-label" for="jobtype">Full Time</label>
+            <label class="col-sm-2">Job Type</label>
+            <div class="form-group col-sm-3">
+              <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="jobtype1" name="jobtype" value="Full Time" <%= user.jobtype == "Full Time" ? "checked" : "" %> >
+                <label class="custom-control-label" for="jobtype1"  >Full Time</label>
+              </div>
+              <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" id="jobtype2" name="jobtype" value="Part Time" <%= user.jobtype == "Part Time" ? "checked" : "" %> >
+                <label class="custom-control-label" for="jobtype2">Part Time</label>
+              </div>
             </div>
           </div>
-        </div>
 
         <button type="submit" class="btn btn-primary">Save</button>
       </form>

@@ -1,10 +1,35 @@
-<%- include("./partials/header.ejs", {active: "Project Detail"}) %>
-<%- include("../overview_partials/header.ejs", {active: "Overview"}) %>
+<%- include("./partials/header.ejs", {active: "Project Detail"}) %> <%-
+include("../overview_partials/header.ejs", {active: "Overview"}) %>
 
-
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+<div
+  class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+>
   <h1 class="h2">Activity</h1>
 </div>
+<div class="card">
+  <h5 class="card-header">Activity</h5>
+  <div class="card-body">
+    <ul class="list-group">
+      
+      <!-- ISSUES -->
+      <% if (issues.length > 0 ) { %>
+      <% issues.forEach((item,index)=>{ %>
+      <li class="list-group-item">
+        <span class="badge badge-primary badge-pill"><%= item.time %></span>
+        <p class="mb-1"><%= item.description %></p>
+        <small>Author : <%= item.author %></small>
+      </li>
+      <% }) %>
 
-<%- include("../overview_partials/footer.ejs") %>
-<%- include("./partials/footer.ejs") %>
+      <!-- NO ACTIVITY ALERT -->
+      <% } else { %>
+      <div class="alert alert-warning" role="alert">
+        There's no Activity
+      </div>
+      <% } %>
+    </ul>
+  </div>
+</div>
+
+<%- include("../overview_partials/footer.ejs") %> <%-
+include("./partials/footer.ejs") %>

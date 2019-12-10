@@ -7,10 +7,10 @@ const helpers = require("../helpers/util")
 // INVOKE KE POOL DARI APP.JS
 module.exports = (db) => {
 
-  // USERS
+  // USERS - LIST
   router.get("/", helpers.isLoggedIn, (req, res, next) => {
     res.locals.title = "Users"
-    let query = `SELECT userid, email, firstname, lastname FROM users`
+    let query = `SELECT userid, email, firstname, lastname, position, jobtype FROM users`
     db.query(query, (err, users) => {
       // console.log(members.rows);
       res.render("users/listUsers", {
@@ -25,8 +25,9 @@ module.exports = (db) => {
   })
     // USERS - ADD USER - SAVE BUTTON
     router.post("/add-user", (req, res, next) => {
-      let query = `INSERT INTO users (email,password,firstname,lastname) VALUES ('${req.body.email}','${req.body.password}','${req.body.firstname}','${req.body.lastname}')`
-      db.query(query, () => {
+      let sql = `INSERT INTO users (email,password,firstname,lastname,position,jobtype) VALUES ('${req.body.email}','${req.body.password}','${req.body.firstname}','${req.body.lastname}','${req.body.position}','${req.body.jobtype}')`
+      console.log(sql);
+      db.query(sql, () => {
         res.redirect("/users")
       })
     })
@@ -42,15 +43,13 @@ module.exports = (db) => {
     })
   })
 
-
   // USERS - EDIT USER - SAVE BUTTON
-  router.post("/edit-user-save", (req, res, next) => {
-    console.log(req.body);
-    
-    // let query = `INSERT INTO users (email,password,firstname,lastname) VALUES ('${req.body.email}','${req.body.password}','${req.body.firstname}','${req.body.lastname}')`
-    // db.query(query, (err, data2) => {
-    //   res.redirect("/users")
-    // })
+  router.post("/edit/:userid/save", (req, res, next) => {
+    let sql = `UPDATE users SET firstname = '${req.body.firstname}',lastname = '${req.body.lastname}',email = '${req.body.email}',password = '${req.body.password}',position = '${req.body.position}',jobtype = '${req.body.jobtype}' WHERE userid = ${req.params.userid}`
+    console.log(sql);
+    db.query(sql, (err) => {
+      res.redirect("/users")
+    })
   })
 
 
@@ -58,9 +57,8 @@ module.exports = (db) => {
 
   // USERS - DELETE USER BUTTON
   router.get("/delete/:userid", (req, res, next) => {
-    console.log(req.params.u);
-    let query = `DELETE FROM users WHERE userid = ${req.params.userid}`
-    db.query(query, (err)=>{
+    let sql = `DELETE FROM members WHERE userid = ${req.params.userid}; DELETE FROM users WHERE userid = ${req.params.userid}`
+    db.query(sql, (err)=>{
       res.redirect("/users")
     })
   })

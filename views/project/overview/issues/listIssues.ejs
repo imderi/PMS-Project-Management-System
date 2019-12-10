@@ -4,19 +4,82 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
   <h1 class="h2">Issues</h1>
 </div>
+<!-- Filters -->
 <div class="card">
   <h5 class="card-header">Filters</h5>
   <div class="card-body">
+    <form action="/" method="get">
 
+      <!-- ID -->
+      <div class="form-group row">
+        <div class="col-sm-3 custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="idcheck">
+          <label class="custom-control-label" for="idcheck" name="idcheck">ID</label>
+        </div>
+        <div class="col-sm-9">
+          <input type="text" class="form-control float-right" id="inputString" name="id" placeholder="ID">
+        </div>
+      </div>
+
+      <!-- STRING -->
+      <div class="form-group row">
+        <div class="col-sm-3 custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="subjectcheck">
+          <label class="custom-control-label" for="subjectcheck" name="subjectcheck">Subject</label>
+        </div>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="inputString" name="subject" placeholder="Subject">
+        </div>
+      </div>
+
+      <!-- ROLE -->
+      <div class="form-group row">
+        <div class="col-sm-3 custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="trackercheck">
+          <label class="custom-control-label" for="trackercheck" name="trackercheck">Tracker</label>
+        </div>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="inputString" name="tracker" placeholder="Tracker">
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
   </div>
 </div>
+
 <br>
+<!-- OPTIONS -->
 <div class="card">
-  <h5 class="card-header">Otions</h5>
+  <h5 class="card-header">Options</h5>
   <div class="card-body">
+    <form action="" method="post">
+      <div class="form-group row">
+        <!-- OPTIONS TITLE -->
+        <label class="col-sm-3">Columns</label>
+        <!-- OPTIONS CHOICES -->
+        <div class="form-group col-sm-2">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="idcolumn">
+            <label class="custom-control-label" for="idcolumn" name="idcolumn">ID</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="subjectcolumn">
+            <label class="custom-control-label" for="subjectcolumn" name="subjectcolumn">Subject</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="trackercolumn">
+            <label class="custom-control-label" for="trackercolumn" name="trackercolumn">Tracker</label>
+          </div>
+        </div>
+      </div>
 
+      <button type="submit" class="btn btn-primary">Apply</button>
+    </form>
   </div>
 </div>
+
+
 <br>
 <div class="table-responsive">
   <table class="table table-stripped">
@@ -49,29 +112,30 @@
     <tbody>
       <% issues.forEach((item, index)=>{ %>
       <tr>
-          <td><%= item.issueid %></td>
-          <td><%= item.tracker %></td>
-          <td><%= item.subject %></td>
-          <td><%= item.description %></td>
-          <td><%= item.status %></td>
+        <td><%= item.issueid %></td>
+        <td><%= item.tracker %></td>
+        <td><%= item.subject %></td>
+        <td><%= item.description %></td>
+        <td><%= item.status %></td>
 
-          <td><%= item.priority %></td>
-          <td><%= item.assignee %></td>
-          <td><%= item.issueid %></td>
-          <td><%= item.duedate %></td>
-          <td><%= item.estimatedtime %></td>
+        <td><%= item.priority %></td>
+        <td><%= item.assignee %></td>
+        <td><%= moment(item.startdate).format('LL') %></td>
+        <td><%= moment(item.duedate).format('LL') %></td>
+        <td><%= item.estimatedtime %></td>
 
-          <td><%= item.done %></td>
-          <td><%= item.file %></td>
-          <td><%= item.spenttime %></td>
-          <td><%= item.targetversion %></td>
-          <td><%= item.author %></td>
+        <td><%= item.done %></td>
+        <td><%= item.file %></td>
+        <td><%= item.spenttime %></td>
+        <td><%= item.targetversion %></td>
+        <td><%= item.author %></td>
 
-          <td><%= item.createddate %></td>
-          <td><%= item.updateddate %></td>
-          <td><%= item.closeddate %></td>
-          <td> <a href="" class="btn btn-success">Edit</a> <a href="" class="btn btn-danger">Delete</a></td>
-
+        <td><%= item.createddate %></td>
+        <td><%= item.updateddate %></td>
+        <td><%= item.closeddate %></td>
+        <td> <a href="/projects/issues/<%= item.projectid %>/<%= item.issueid %>/edit" class="btn btn-success">Edit</a>
+          <a href="/projects/issues/<%= item.projectid %>/<%= item.issueid %>/delete" class="btn btn-danger">Delete</a>
+        </td>
       </tr>
       <% })%>
     </tbody>
@@ -79,7 +143,6 @@
 </div>
 
 <a href="/projects/issues/<%= data[0].projectid %>/add" class="btn btn-primary">Add</a>
-
 
 
 <%- include("../overview_partials/footer.ejs") %>

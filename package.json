@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "bcrypt": "^3.0.7",
+    "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
@@ -19,7 +20,15 @@
     "nodemon": "^1.19.4"
   },
   "main": "app.js",
-  "author": "",
+  "author": "Deri Nuriansyah",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imderi/PMS-Project-Management-System.git"
+  },
+  "bugs": {
+    "url": "https://github.com/imderi/PMS-Project-Management-System/issues"
+  },
+  "homepage": "https://github.com/imderi/PMS-Project-Management-System#readme",
   "description": ""
 }
