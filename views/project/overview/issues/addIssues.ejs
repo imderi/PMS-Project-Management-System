@@ -54,23 +54,23 @@
               <label class="custom-control-label" for="new" name="new">New</label>
             </div>
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" id="inprogres" name="status" value="In Progres">
+              <input type="radio" class="custom-control-input" id="inprogres" name="status" value="In Progres" disabled>
               <label class="custom-control-label" for="inprogres" name="inprogres">In Progress</label>
             </div>
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" id="resolved" name="status" value="Resolved">
+              <input type="radio" class="custom-control-input" id="resolved" name="status" value="Resolved" disabled>
               <label class="custom-control-label" for="resolved">Resolved</label>
             </div>
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" id="feedback" name="status" value="Feedback">
+              <input type="radio" class="custom-control-input" id="feedback" name="status" value="Feedback" disabled>
               <label class="custom-control-label" for="feedback">Feedback</label>
             </div>
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" id="closed" name="status" value="Closed">
+              <input type="radio" class="custom-control-input" id="closed" name="status" value="Closed" disabled>
               <label class="custom-control-label" for="closed">Closed</label>
             </div>
             <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" id="rejected" name="status" value="Rejected">
+              <input type="radio" class="custom-control-input" id="rejected" name="status" value="Rejected" disabled>
               <label class="custom-control-label" for="rejected">Rejected</label>
             </div>
           </div>
@@ -141,33 +141,49 @@
           <label class="col-sm-3">Done (%)</label>
           <div class="form-group col-sm-5">
             <select class="form-control" id="exampleFormControlSelect1" name="done">
-              <option>0 %</option value="0">
-              <option>10 %</option value="10">
-              <option>20 %</option value="20">
-              <option>30 %</option value="30">
-              <option>40 %</option value="40">
-              <option>50 %</option value="50">
-              <option>60 %</option value="60">
-              <option>70 %</option value="70">
-              <option>80 %</option value="80">
-              <option>90 %</option value="90">
-              <option>100 %</option value="100">
+              <option>0</option>
+              <option>10</option>
+              <option>20</option>
+              <option>30</option>
+              <option>40</option>
+              <option>50</option>
+              <option>60</option>
+              <option>70</option>
+              <option>80</option>
+              <option>90</option>
+              <option>100</option>
             </select>
           </div>
         </div>
 
-        <!-- FILES -->
+        <!-- FILE -->
         <div class="form-group row">
           <label class="col-sm-3">Files</label>
           <div class="form-group col-sm-5">
             <div class="custom-control custom-checkbox">
-              <input type="file" class="custom-file-input" id="customFile" name="file">
-              <label class="custom-file-label" for="customFile">Choose file</label>
+              <input type="file" class="custom-file-input" id="customfile" name="file">
+              <label class="custom-file-label" for="customfile">Choose file</label>
             </div>
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Apply</button>
+        <!-- SPENT TIME -->
+        <div class="form-group row">
+          <label class="col-sm-3">Spent Time (Hours)</label>
+          <div class="form-group col-sm-5">
+            <input class="form-control" type="number" name="spenttime" id="" readonly>
+          </div>
+        </div>
+
+        <!-- TARGET VERSION -->
+        <div class="form-group row">
+          <label for="subject" class="col-sm-3 col-form-label">Target Version</label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" id="subject" name="targetversion" placeholder="Target Version" >
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Add Issue</button>
 
       </form>
     </div>

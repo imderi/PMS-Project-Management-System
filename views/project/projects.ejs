@@ -42,7 +42,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Search</button>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
             </form>
         </div>
     </div>
@@ -73,7 +73,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Apply</button>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-check-square-o"></i> Apply</button>
             </form>
         </div>
     </div>
@@ -99,8 +99,10 @@
                     <td> <%= item.projectname %></td>
                     <td> <%= item.fullname %> </td>
                     <td>
-                        <a href="/projects/edit/<%= item.projectid %>" class="btn btn-success" id="">Edit</a>
-                        <a href="/projects/delete/<%= item.projectid %>" class="btn btn-danger" id="">Delete</a>
+                        <a href="/projects/edit/<%= item.projectid %>" class="btn btn-success" id=""><i class="fa fa-edit"></i> Edit</a>
+                        <% if (isadmin) { %>
+                        <a href="/projects/delete/<%= item.projectid %>" class="btn btn-danger" id=""><i class="fa fa-trash"></i> Delete</a>
+                        <% } %>
                     </td>
                 </tr>
                 <% }) %>
@@ -112,7 +114,7 @@
         </nav>
 
         <!-- ADD BUTTON -->
-        <a href="/projects/add" class="btn btn-primary">Add Project</a>
+        <a href="/projects/add" class="btn btn-primary"><i class="fa fa-plus"></i> Add Project</a>
         </form>
     </div>
 </div>

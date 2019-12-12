@@ -4,7 +4,7 @@
 
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <h1 class="h2">Edit Members for : #<%= data[0].projectid %> <%= data[0].name %></h1>
+  <h1 class="h2">Members on : #<%= data[0].projectid %> <%= data[0].name %></h1>
 </div>
 <!-- Filters -->
 <div class="card">
@@ -45,7 +45,7 @@
               </div>
           </div>
 
-          <button type="submit" class="btn btn-primary">Search</button>
+          <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
       </form>
   </div>
 </div>
@@ -76,7 +76,7 @@
               </div>
           </div>
 
-          <button type="submit" class="btn btn-primary">Apply</button>
+          <button type="submit" class="btn btn-primary"><i class="fa fa-check-square-o"></i> Apply</button>
       </form>
   </div>
 </div>
@@ -100,8 +100,10 @@
         <td> <%= item.firstname + item.lastname%> </td>
         <td> <%= item.role %></td>
         <td>
-          <a href="/projects/members/<%= item.projectid %>/<%= item.userid %>/edit" class="btn btn-success">Edit</a>
-          <a href="/projects/members/<%= item.projectid %>/<%= item.userid %>/delete" class="btn btn-danger">Delete</a>
+          <a href="/projects/members/<%= item.projectid %>/<%= item.userid %>/edit" class="btn btn-success"><i class="fa fa-edit"></i> Edit</a>
+          <% if (isadmin) { %>
+            <a href="/projects/members/<%= item.projectid %>/<%= item.userid %>/delete" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+          <% } %>
         </td>
       </tr>
       <% }) %>
@@ -109,7 +111,7 @@
   </table>
 </div>
 
-<a href="/projects/members/<%= data[0].projectid %>/add" class="btn btn-primary">Add Member</a>
+<a href="/projects/members/<%= data[0].projectid %>/add" class="btn btn-primary"><i class="fa fa-plus"></i> Add Member</a>
 
 <%- include("../overview_partials/footer.ejs") %>
 <%- include("./partials/footer.ejs") %>

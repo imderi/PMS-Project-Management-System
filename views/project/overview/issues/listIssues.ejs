@@ -12,38 +12,38 @@
 
       <!-- ID -->
       <div class="form-group row">
-        <div class="col-sm-3 custom-control custom-checkbox">
+        <div class="col-sm-2 custom-control custom-checkbox">
           <input type="checkbox" class="custom-control-input" id="idcheck">
           <label class="custom-control-label" for="idcheck" name="idcheck">ID</label>
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm">
           <input type="text" class="form-control float-right" id="inputString" name="id" placeholder="ID">
         </div>
       </div>
 
-      <!-- STRING -->
+      <!-- TRACKER -->
       <div class="form-group row">
-        <div class="col-sm-3 custom-control custom-checkbox">
-          <input type="checkbox" class="custom-control-input" id="subjectcheck">
-          <label class="custom-control-label" for="subjectcheck" name="subjectcheck">Subject</label>
-        </div>
-        <div class="col-sm-9">
-          <input type="text" class="form-control" id="inputString" name="subject" placeholder="Subject">
-        </div>
-      </div>
-
-      <!-- ROLE -->
-      <div class="form-group row">
-        <div class="col-sm-3 custom-control custom-checkbox">
+        <div class="col-sm-2 custom-control custom-checkbox">
           <input type="checkbox" class="custom-control-input" id="trackercheck">
           <label class="custom-control-label" for="trackercheck" name="trackercheck">Tracker</label>
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm">
           <input type="text" class="form-control" id="inputString" name="tracker" placeholder="Tracker">
         </div>
       </div>
 
-      <button type="submit" class="btn btn-primary">Search</button>
+      <!-- SUBJECT -->
+      <div class="form-group row">
+        <div class="col-sm-2 custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="subjectcheck">
+          <label class="custom-control-label" for="subjectcheck" name="subjectcheck">Subject</label>
+        </div>
+        <div class="col-sm">
+          <input type="text" class="form-control" id="inputString" name="subject" placeholder="Subject">
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
     </form>
   </div>
 </div>
@@ -56,25 +56,147 @@
     <form action="" method="post">
       <div class="form-group row">
         <!-- OPTIONS TITLE -->
-        <label class="col-sm-3">Columns</label>
-        <!-- OPTIONS CHOICES -->
-        <div class="form-group col-sm-2">
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="idcolumn">
-            <label class="custom-control-label" for="idcolumn" name="idcolumn">ID</label>
+        <label class="col-sm-2">Columns</label>
+
+        <div class="row">
+          <div class="col">
+            <!-- 1 ST  COLUMN -->
+            <!-- OPTIONS CHOICES -->
+            <div class="form-group col-sm-2">
+
+              <!-- ID OPTION -->
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="idcolumn">
+                <label class="custom-control-label" for="idcolumn" name="idcolumn">ID</label>
+              </div>
+
+              <!-- TRACKER OPTION -->
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="trackercolumn">
+                <label class="custom-control-label" for="trackercolumn" name="trackercolumn">Tracker</label>
+              </div>
+
+              <!-- SUBJECT OPTION -->
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="subjectcolumn">
+                <label class="custom-control-label" for="subjectcolumn" name="subjectcolumn">Subject</label>
+              </div>
+
+              <!-- DESCRIPTION OPTION -->
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="descriptioncolumn">
+                <label class="custom-control-label" for="descriptioncolumn" name="descriptioncolumn">Description</label>
+              </div>
+
+              <!-- STATUS OPTION -->
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="statuscolumn">
+                <label class="custom-control-label" for="statuscolumn" name="statuscolumn">Status</label>
+              </div>
+
+              <!-- PRIORITY OPTION -->
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="prioritycolumn">
+                <label class="custom-control-label" for="prioritycolumn" name="prioritycolumn">Priority</label>
+              </div>
+
+            </div>
           </div>
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="subjectcolumn">
-            <label class="custom-control-label" for="subjectcolumn" name="subjectcolumn">Subject</label>
+
+          <!-- 2 ND  COLUMN -->
+          <div class="col">
+            <!-- OPTIONS CHOICES -->
+            <div class="form-group col-sm">
+
+              <!-- ASSIGNEE OPTION -->
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="assigneecolumn">
+                <label class="custom-control-label" for="assigneecolumn" name="assigneecolumn">Assignee</label>
+              </div>
+
+              <!-- SUBJECT OPTION -->
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="startdatecolumn">
+                <label class="custom-control-label" for="startdatecolumn" name="startdatecolumn">Start Date</label>
+              </div>
+
+              <!-- DESCRIPTION OPTION -->
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="duedatecolumn">
+                <label class="custom-control-label" for="duedatecolumn" name="duedatecolumn">Due Date</label>
+              </div>
+
+              <!-- DESCRIPTION OPTION -->
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="estimatedcolumn">
+                <label class="custom-control-label" for="estimatedcolumn" name="estimatedcolumn">Estimated
+                  Time</label>
+              </div>
+
+              <!-- DONE OPTION -->
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="donecolumn">
+                <label class="custom-control-label" for="donecolumn" name="donecolumn">Done</label>
+              </div>
+
+              <!-- FILE OPTION -->
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="filecolumn">
+                <label class="custom-control-label" for="filecolumn" name="filecolumn">File</label>
+              </div>
+
+            </div>
           </div>
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="trackercolumn">
-            <label class="custom-control-label" for="trackercolumn" name="trackercolumn">Tracker</label>
+
+          <!-- 3 RD COLUMN -->
+          <div class="col">
+            <!-- OPTIONS CHOICES -->
+            <div class="form-group col-sm">
+
+              <!-- SPENT OPTION -->
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="spenttimecolumn">
+                <label class="custom-control-label" for="spenttimecolumn" name="spenttimecolumn">Spent Time</label>
+              </div>
+
+              <!--TARGET OPTION -->
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="targetcolumn">
+                <label class="custom-control-label" for="targetcolumn" name="targercolumn">Target
+                  Version</label>
+              </div>
+
+              <!-- AUTHOR OPTION -->
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="authorcolumn">
+                <label class="custom-control-label" for="authorncolumn" name="authorcolumn">Author</label>
+              </div>
+
+              <!-- CREATED DATE OPTION -->
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="createddate">
+                <label class="custom-control-label" for="createddate" name="createddatecolumn">Created Date</label>
+              </div>
+
+              <!-- UPDATED DATE OPTION -->
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="updateddatecolumn">
+                <label class="custom-control-label" for="updateddatecolumn" name="updateddatecolumn">Updated
+                  Date</label>
+              </div>
+
+              <!-- CLOSED DATE OPTION -->
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="closeddatecolumn">
+                <label class="custom-control-label" for="closeddatecolumn" name="closeddatecolumn">Closed Date</label>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <button type="submit" class="btn btn-primary">Apply</button>
+      </div><!-- /FORM GROUP ROW -->
+
+      <button type="submit" class="btn btn-primary"><i class="fa fa-check-square-o"></i> Apply</button>
     </form>
   </div>
 </div>
@@ -110,6 +232,7 @@
       </tr>
     </thead>
     <tbody>
+      <% if (issues.length > 0) { %>
       <% issues.forEach((item, index)=>{ %>
       <tr>
         <td><%= item.issueid %></td>
@@ -138,11 +261,21 @@
         </td>
       </tr>
       <% })%>
+      <% } else{ %>
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        There's no issues yet
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <% } %>
+
     </tbody>
   </table>
 </div>
 
-<a href="/projects/issues/<%= data[0].projectid %>/add" class="btn btn-primary">Add</a>
+<a href="/projects/issues/<%= data[0].projectid %>/add" class="btn btn-primary"><i class="fa fa-plus"></i> Add Issue</a>
 
 
 <%- include("../overview_partials/footer.ejs") %>

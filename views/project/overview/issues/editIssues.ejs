@@ -5,7 +5,7 @@
   <div class="card">
     <h5 class="card-header">Edit issues</h5>
     <div class="card-body">
-      <form action="/projects/issues/<%= data.projectid %>/edit-save" method="post">
+      <form action="/projects/issues/<%= data.projectid %>/<%= data.issueid %>/edit-save" method="post">
 
         <!-- TRACKER TITLE -->
         <div class="form-group row">
@@ -164,6 +164,22 @@
               <input type="file" class="custom-file-input" id="customFile" name="file" value="<%= data.files %>">
               <label class="custom-file-label" for="customFile"><%= data.files %></label>
             </div>
+          </div>
+        </div>
+
+        <!-- SPENT TIME -->
+        <div class="form-group row">
+          <label class="col-sm-3">Spent Time (Hours)</label>
+          <div class="form-group col-sm-5">
+            <input class="form-control" type="number" name="spenttime" id="" value="0" >
+          </div>
+        </div>
+
+        <!-- TARGET VERSION -->
+        <div class="form-group row">
+          <label for="subject" class="col-sm-3 col-form-label">Target Version</label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" id="subject" name="targetversion" placeholder="Target Version" value="<%= data.targetversion %>" >
           </div>
         </div>
 

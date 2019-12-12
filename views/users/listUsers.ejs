@@ -2,6 +2,7 @@
 
 <div class="container">
   <h3>Users</h3>
+  <hr>
   <!-- FILTERS -->
   <div class="card">
     <h5 class="card-header">Filters</h5>
@@ -63,7 +64,7 @@
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
       </form>
     </div>
   </div>
@@ -102,7 +103,7 @@
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Apply</button>
+        <button type="submit" class="btn btn-primary"><i class="fa fa-check-square-o"></i> Apply</button>
       </form>
     </div>
   </div>
@@ -133,14 +134,15 @@
           <td><%=item.position%></td>
           <td><%=item.jobtype%></td>
           <td>
-            <a href="/users/edit/<%= item.userid %>" class="btn btn-success" id="">Edit</a>
-            <a href="/users/delete/<%= item.userid %>" class="btn btn-danger" id="">Delete</a>
+            <a href="/users/edit/<%= item.userid %>" class="btn btn-success" id=""><i class="fa fa-edit"></i> Edit</a>
+            <a href="/users/delete/<%= item.userid %>" class="btn btn-danger" id=""><i class="fa fa-trash"></i> Delete</a>
           </td>
         </tr>
         <% }) %>
       </tbody>
     </table>
   </div>
-  <a href="/users/adduser" class="btn btn-primary">Add User</a>
+  <a href="/users/adduser" class="btn btn-primary"><i class="fa fa-plus"></i> Add User</a>
 </div>
+<br>
 <%- include("./partials/footer.ejs") %>

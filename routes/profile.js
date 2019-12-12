@@ -13,7 +13,8 @@ module.exports = (db) => {
     let sql = `SELECT email,position,jobtype FROM users WHERE email = '${req.session.user.email}'`;
     db.query(sql, (err, profile) => {
       res.render("profile/profile", {
-        profile: profile.rows[0]
+        profile: profile.rows[0],
+        isadmin: req.session.user.isadmin
       });
     });
   });

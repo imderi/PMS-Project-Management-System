@@ -12,8 +12,8 @@
     <!-- <link rel="stylesheet" href="stylesheets/style.css"> -->
     <!-- CUSTOM CSS DARI BOOTSTRAP UNTUK SIDEBAR -->
 
-    <!-- ICON MATERIALIZE -->
-    
+    <!-- FONT AWESOME -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 
     <!-- FAVICON -->
@@ -34,16 +34,21 @@
 
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <!-- PROJECTS MENU -->
                 <li <%if(active=="Projects"){%>class="nav-item active" <%}%> >
                     <a class="nav-link" href="/projects">Projects <span class="sr-only">(current)</span></a>
                 </li>
+                <!-- PROFILE MENU -->
                 <li <%if(active=="Profile"){%>class="nav-item active" <%}%> >
                     <a class="nav-link" href="/profile">Profile <span class="sr-only">(current)</span></a>
                 </li>
-                <li <%if(active=="Users"){%>class="nav-item active" <%}%> >
-                    <a class="nav-link" href="/users">Users <span class="sr-only">(current)</span></a>
-                </li>
+                <!-- USERS MENU -->
+                <% if (isadmin) { %>
+                    <li <%if(active=="Users"){%>class="nav-item active" <%}%> >
+                        <a class="nav-link" href="/users">Users <span class="sr-only">(current)</span></a>
+                    </li>
+                <% } %>
             </ul>
-            <a href="/logout" class="btn btn-outline-danger my-2 my-sm-0">Log out</a>
+            <a href="/logout" class="btn btn-danger my-2 my-sm-0">Log out</a>
         </div>
     </nav>
