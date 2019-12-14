@@ -248,7 +248,8 @@
         <td><%= item.estimatedtime %></td>
 
         <td><%= item.done %></td>
-        <td><%= item.file %></td>
+
+        <td><a href="/images/<%= item.files %>"><%= item.files == 'null' ? 'disabled' : '' %> <i class="fa fa-download fa-2x"></i> </button> </a> </td>
         <td><%= item.spenttime %></td>
         <td><%= item.targetversion %></td>
         <td><%= item.author %></td>
@@ -256,8 +257,8 @@
         <td><%= item.createddate %></td>
         <td><%= item.updateddate %></td>
         <td><%= item.closeddate %></td>
-        <td> <a href="/projects/issues/<%= item.projectid %>/<%= item.issueid %>/edit" class="btn btn-success">Edit</a>
-          <a href="/projects/issues/<%= item.projectid %>/<%= item.issueid %>/delete" class="btn btn-danger">Delete</a>
+        <td> <a href="/projects/issues/<%= item.projectid %>/<%= item.issueid %>/edit" class="btn btn-success"><i class="fa fa-edit"></i> Edit</a>
+          <a href="/projects/issues/<%= item.projectid %>/<%= item.issueid %>/delete" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
         </td>
       </tr>
       <% })%>

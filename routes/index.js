@@ -8,7 +8,7 @@ const helpers = require("../helpers/util")
 module.exports = (db) => {
 
   // SAMPLE
-  router.get("/sample",(err, res, next) => {
+  router.get("/sample", (err, res, next) => {
     res.render("project/overview/overview_partials/sidebar")
   })
 
@@ -18,7 +18,7 @@ module.exports = (db) => {
       info: req.flash('info')
     });
   });
-  
+
 
   // AUTHENTICATION FOR LOGIN
   router.post("/auth", (req, res, next) => {
@@ -30,12 +30,12 @@ module.exports = (db) => {
       `SELECT * FROM users WHERE email = '${email}'`,
       (err, data) => {
         if (data.rows.length > 0) {
-          if (data.rows[0].email == email && data.rows[0].password == password ) {
+          if (data.rows[0].email == email && data.rows[0].password == password) {
             data.rows[0].password = null;
             req.session.user = data.rows[0];
             res.redirect("/projects");
           }
-        }else {
+        } else {
           req.flash('info', "Email & Passwords is wrong")
           res.redirect("/");
         }

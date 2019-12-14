@@ -3,11 +3,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
 // SESSION
 var session = require("express-session");
+
 // FLASH
 var flash = require('connect-flash')
 
+// EXPRESS FILE UPLOAD
+const fileUpload = require('express-fileupload');
 
 // POSTGRE DB CONNECTION
 const { Pool } = require('pg')
@@ -18,6 +22,7 @@ const pool = new Pool({
     password: '12345',
     port: 5432,
 })
+
 
 var indexRouter = require('./routes/index')(pool);
 var usersRouter = require('./routes/users')(pool);
@@ -35,7 +40,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-// SESSION FUNCTION
+// SESSION USE
 app.use(
   session({
     secret: "keyboard cat",
@@ -43,8 +48,10 @@ app.use(
     saveUninitialized: true
   })
 );
-// FLASH FUNCTION
+// FLASH USE
 app.use(flash())
+// FILE-UPLOAD USE
+app.use(fileUpload());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

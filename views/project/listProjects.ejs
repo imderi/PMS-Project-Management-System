@@ -3,13 +3,13 @@
 <div class="container">
     <h3>Projects</h3>
     <hr>
-    <!-- Filters -->
+    <!-- FILTERS / SEARCH -->
     <div class="card">
         <h5 class="card-header">Filters</h5>
         <div class="card-body">
             <form action="/" method="get">
 
-                <!-- ID -->
+                <!-- PROJECT ID -->
                 <div class="form-group row">
                     <div class="col-sm-3 custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="idcheck">
@@ -20,7 +20,7 @@
                     </div>
                 </div>
 
-                <!-- STRING -->
+                <!-- NAME -->
                 <div class="form-group row">
                     <div class="col-sm-3 custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="namecheck">
@@ -99,18 +99,35 @@
                     <td> <%= item.projectname %></td>
                     <td> <%= item.fullname %> </td>
                     <td>
-                        <a href="/projects/edit/<%= item.projectid %>" class="btn btn-success" id=""><i class="fa fa-edit"></i> Edit</a>
+                        <a href="/projects/edit/<%= item.projectid %>" class="btn btn-success" id=""><i
+                                class="fa fa-edit"></i> Edit</a>
                         <% if (isadmin) { %>
-                        <a href="/projects/delete/<%= item.projectid %>" class="btn btn-danger" id=""><i class="fa fa-trash"></i> Delete</a>
+                        <a href="/projects/delete/<%= item.projectid %>" class="btn btn-danger" id=""><i
+                                class="fa fa-trash"></i> Delete</a>
                         <% } %>
                     </td>
                 </tr>
                 <% }) %>
             </tbody>
         </table>
-
-        <nav aria-label="table">
+        <nav aria-label="Page navigation example">
             <ul class="pagination">
+                <!-- PREVIOUS PAGINATION --> 
+                <li class="page-item<%= pagination.page == 1 ? ' disabled' : '' %>"><a class="page-link"
+                        href="/projects<%= pagination.url.replace(`page=${pagination.page}`, `page=${parseInt(pagination.page) - 1}`); %>"> <i class="fa fa-backward"></i> </a>
+                </li>
+
+                <% for (var i = 1; i <= pagination.pages; i++) { %>
+                <li class="page-item<%= i == pagination.page ? ' active' : '' %>">
+                    <a class="page-link" href="/projects<%= pagination.url.replace(`page=${pagination.page}`, `page=${i}`); %>"><%= i %></a>
+                </li>
+                <% } %>
+
+                <!-- NEXT PAGINATION --> 
+                <li class="page-item<%= pagination.page == pagination.pages ? ' disabled' : '' %>">
+                    <a class="page-link" href="/projects<%= pagination.url.replace(`page=${pagination.page}`, `page=${parseInt(pagination.page) + 1}`); %>"> <i class="fa fa-forward"></i> </a>
+                </li>
+            </ul>
         </nav>
 
         <!-- ADD BUTTON -->

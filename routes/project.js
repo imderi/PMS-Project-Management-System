@@ -1,33 +1,51 @@
 var express = require("express");
 var router = express.Router();
+const path = require("path");
 const helpers = require("../helpers/util");
 // MOMENT
 var moment = require("moment");
 
 module.exports = db => {
-  // PROJECTS HOME PAGE
-
-  // IS ADMIN
-
+  // PROJECTS PAGE
   router.get("/", helpers.isLoggedIn, (req, res, next) => {
     res.locals.title = "Projects";
     res.locals.user = req.session.user;
 
-    // PAGINATION
+    // PAGINATION PART 1
+    const url = req.url == '/' ? '/?page=1' : req.url;
+    const page = req.query.page || 1;
+    const limit = 3;
+    const offset = (page - 1) * limit;
 
     // * QUERY FOR SHOWING DATA TO PROJECTS PAGE
-    let sql = `SELECT members.projectid, MAX(projects.name) projectname, STRING_AGG(CONCAT(users.firstname, ' ', users.lastname), ', ') fullname FROM members INNER JOIN projects USING (projectid) INNER JOIN users USING (userid) GROUP BY projectid ORDER BY projectid`;
-    db.query(sql, (err, projects) => {
-      // console.log(projects.rows);
-      res.render("project/projects", {
-        data: projects.rows,
-        isadmin: req.session.user.isadmin
-      });
+    let sql = `SELECT members.projectid, MAX(projects.name) projectname, STRING_AGG(CONCAT(users.firstname, ' ', users.lastname), ', ') fullname FROM members INNER JOIN projects USING (projectid) INNER JOIN users USING (userid) GROUP BY projectid `;
+    db.query(sql, (err, allprojects) => {
+      // PART 2
+      const total = allprojects.rowCount;
+      const pages = Math.ceil(total / limit);
+      
+      // PART 3
+      sql += `ORDER BY projectid LIMIT ${limit} OFFSET ${offset}`
+      db.query(sql, (err, projects) => {
+        if (err) {
+          return res.send(err)
+        }
+        res.render("project/listProjects", {
+          data: projects.rows,
+          isadmin: req.session.user.isadmin,
+          pagination: {
+            pages,
+            page,
+            url
+          },
+          query: req.query
+        });
+      })
     });
   });
 
   // ADD PROJECT
-  router.get("/add",helpers.isLoggedIn, (req, res, next) => {
+  router.get("/add", helpers.isLoggedIn, (req, res, next) => {
     // console.log(req.session.user.userid);
     res.locals.title = "Add Project";
     // let sql =
@@ -73,7 +91,7 @@ module.exports = db => {
   router.get("/edit/:projectid", helpers.isLoggedIn, (req, res, next) => {
     res.locals.title = "Edit Project";
     let sql1 = `SELECT * FROM projects WHERE projectid = ${req.params.projectid}`;
-    let sql2 = `SELECT * FROM users`
+    let sql2 = `SELECT * FROM users`;
     db.query(sql1, (err, project) => {
       db.query(sql2, (err, member) => {
         res.render("project/editProject", {
@@ -81,19 +99,19 @@ module.exports = db => {
           members: member.rows,
           isadmin: req.session.user.isadmin
         });
-      })
+      });
     });
   });
 
   // EDIT PROJECT SAVE BUTTON
   router.post("/edit/save/:projectid", helpers.isLoggedIn, (req, res, next) => {
     // console.log(req.body);
-    let sql1 = `DELETE FROM members WHERE projectid = ${req.params.projectid}`
+    let sql1 = `DELETE FROM members WHERE projectid = ${req.params.projectid}`;
     console.log(sql1);
     let sql2 = `UPDATE projects SET name = '${req.body.projectname}' WHERE projectid = ${req.params.projectid}`;
-    let sql3 = `SELECT * FROM projects WHERE ptojectid = ${req.params.projectid}`
-    db.query(sql1, (err) => {
-      db.query(sql2, (err) => {
+    let sql3 = `SELECT * FROM projects WHERE ptojectid = ${req.params.projectid}`;
+    db.query(sql1, err => {
+      db.query(sql2, err => {
         db.query(sql3, (err, select) => {
           let arr = [];
           let idProject = req.params.projectid;
@@ -105,12 +123,14 @@ module.exports = db => {
               arr.push(`(${member[index]}, ${idProject})`);
             });
           }
-          let sqlsave = `INSERT INTO members (userid, projectid) VALUES ${arr.join(",")}`;
-          db.query(sqlsave, (err) => {
+          let sqlsave = `INSERT INTO members (userid, projectid) VALUES ${arr.join(
+            ","
+          )}`;
+          db.query(sqlsave, err => {
             res.redirect("/projects");
           });
-        })
-      })
+        });
+      });
     });
   });
 
@@ -171,7 +191,7 @@ module.exports = db => {
             supportTotal += 1;
           }
         });
-
+        
         res.render("project/overview/overview", {
           data: data.rows,
           issues: issues.rows,
@@ -222,62 +242,82 @@ module.exports = db => {
   });
 
   // MEMBERS LIST - ADD MEMBER SCREEN
-  router.get("/members/:projectid/add", helpers.isLoggedIn, (req, res, next) => {
-    res.locals.title = "Members | Add Member";
-    // SELECT userid,email,CONCAT(firstname,' ',lastname) AS fullname FROM users WHERE userid NOT IN (SELECT userid FROM members WHERE projectid = 14)
-    let sql = `SELECT userid,email,CONCAT(firstname,' ',lastname) AS fullname FROM users WHERE userid NOT IN (SELECT userid FROM members WHERE projectid = ${req.params.projectid})`;
-    db.query(sql, (err, data) => {
-      res.render("project/overview/members/addMember", {
-        data: data.rows,
-        projectid: req.params.projectid,
-        isadmin: req.session.user.isadmin
+  router.get(
+    "/members/:projectid/add",
+    helpers.isLoggedIn,
+    (req, res, next) => {
+      res.locals.title = "Members | Add Member";
+      // SELECT userid,email,CONCAT(firstname,' ',lastname) AS fullname FROM users WHERE userid NOT IN (SELECT userid FROM members WHERE projectid = 14)
+      let sql = `SELECT userid,email,CONCAT(firstname,' ',lastname) AS fullname FROM users WHERE userid NOT IN (SELECT userid FROM members WHERE projectid = ${req.params.projectid})`;
+      db.query(sql, (err, data) => {
+        res.render("project/overview/members/addMember", {
+          data: data.rows,
+          projectid: req.params.projectid,
+          isadmin: req.session.user.isadmin
+        });
       });
-    });
-  });
+    }
+  );
 
   // MEMBERS LIST - ADD MEMBER - SAVE
-  router.post("/members/:projectid/add-save", helpers.isLoggedIn, (req, res, next) => {
-    sql = `INSERT INTO members(userid,role,projectid) VALUES(${req.body.userid},'${req.body.position}',${req.params.projectid})`;
-    // console.log(sql);
-    db.query(sql, (err, data) => {
-      res.redirect(`/projects/members/${req.params.projectid}`);
-    });
-  });
-
-  // MEMBERS LIST - EDIT MEMBER
-  router.get("/members/:projectid/:userid/edit", helpers.isLoggedIn, (req, res, next) => {
-    res.locals.title = "Members | Edit Member";
-    let sql = `SELECT * FROM users WHERE userid = ${req.params.userid}`;
-    db.query(sql, (err, data) => {
-      res.render("project/overview/members/editMember", {
-        data: data.rows[0],
-        projectid: req.params.projectid,
-        isadmin: req.session.user.isadmin
-      });
-    });
-  });
-
-  // MEMBERS LIST - EDIT MEMBER - SAVE
-  router.post("/members/:projectid/:userid/edit-save", helpers.isLoggedIn, (req, res, next) => {
-    console.log(req.params);
-    sql = `UPDATE members SET role = '${req.body.position}' WHERE userid = ${req.params.userid} AND projectid = ${req.params.projectid}`;
-    db.query(sql, (err, data) => {
-      console.log(sql);
-      res.redirect(`/projects/members/${req.params.projectid}`);
-    });
-  });
-
-  // MEMBERS LIST - DELETE MEMBER
-  router.get("/members/:projectid/:userid/delete", helpers.isLoggedIn, (req, res, next) => {
-    if (req.session.user.isadmin == true) {
-      let sql = `DELETE FROM members WHERE userid = ${req.params.userid}`;
+  router.post(
+    "/members/:projectid/add-save",
+    helpers.isLoggedIn,
+    (req, res, next) => {
+      sql = `INSERT INTO members(userid,role,projectid) VALUES(${req.body.userid},'${req.body.position}',${req.params.projectid})`;
+      // console.log(sql);
       db.query(sql, (err, data) => {
         res.redirect(`/projects/members/${req.params.projectid}`);
       });
-    } else {
-      res.send("403 Forbidden");
     }
-  });
+  );
+
+  // MEMBERS LIST - EDIT MEMBER
+  router.get(
+    "/members/:projectid/:userid/edit",
+    helpers.isLoggedIn,
+    (req, res, next) => {
+      res.locals.title = "Members | Edit Member";
+      let sql = `SELECT * FROM users WHERE userid = ${req.params.userid}`;
+      db.query(sql, (err, data) => {
+        res.render("project/overview/members/editMember", {
+          data: data.rows[0],
+          projectid: req.params.projectid,
+          isadmin: req.session.user.isadmin
+        });
+      });
+    }
+  );
+
+  // MEMBERS LIST - EDIT MEMBER - SAVE
+  router.post(
+    "/members/:projectid/:userid/edit-save",
+    helpers.isLoggedIn,
+    (req, res, next) => {
+      console.log(req.params);
+      sql = `UPDATE members SET role = '${req.body.position}' WHERE userid = ${req.params.userid} AND projectid = ${req.params.projectid}`;
+      db.query(sql, (err, data) => {
+        console.log(sql);
+        res.redirect(`/projects/members/${req.params.projectid}`);
+      });
+    }
+  );
+
+  // MEMBERS LIST - DELETE MEMBER
+  router.get(
+    "/members/:projectid/:userid/delete",
+    helpers.isLoggedIn,
+    (req, res, next) => {
+      if (req.session.user.isadmin == true) {
+        let sql = `DELETE FROM members WHERE userid = ${req.params.userid}`;
+        db.query(sql, (err, data) => {
+          res.redirect(`/projects/members/${req.params.projectid}`);
+        });
+      } else {
+        res.send("403 Forbidden");
+      }
+    }
+  );
 
   // ISSUES
   // ISSUES LIST
@@ -311,58 +351,116 @@ module.exports = db => {
     });
   });
 
-  // ISSUES LIST - ADD ISSUES - APPLY
-  router.post("/issues/:projectid/add-save", helpers.isLoggedIn, (req, res, next) => {
-    let sql1 = `INSERT INTO issues(projectid,tracker,subject,description,status,priority,assignee,author,startdate,duedate,estimatedtime,done,files,spenttime,targetversion,createddate)
-    VALUES(${req.params.projectid},'${req.body.tracker}','${req.body.subject}','${req.body.description}','${req.body.status}','${req.body.priority}',${req.body.assignee},(SELECT author FROM projects WHERE projectid = ${req.params.projectid}),'${req.body.startdate}','${req.body.duedate}','${req.body.estimatedtime}',${req.body.done},'${req.body.file}','0',${req.body.targetversion},NOW())`;
-    console.log('SQL ISSUE', sql1);
+  // ISSUES LIST - ADD ISSUES - APPLY / SAVE
+  router.post("/issues/:projectid/add-save", (req, res, next) => {
+    console.log(req.files.sampleFile);
 
-    let sql2 = `INSERT INTO activity(time,title,description,projectid,author)
-    VALUES(NOW(),'${req.body.subject}','New Issue Created : (Issue ID : #${req.params.issueid}) Tracker : [${req.body.tracker}] Subject : ${req.body.subject} - (${req.body.status}) - 
+    let sql1 = `INSERT INTO activity(time,title,description,projectid,author)
+    VALUES(NOW(),'${req.body.subject}','New Issue Created : Tracker : [${req.body.tracker}] Subject : ${req.body.subject} - (${req.body.status}) - 
     Done: ${req.body.done}%.',${req.params.projectid},(SELECT author FROM projects WHERE projectid = ${req.params.projectid}))`;
-    console.log('SQL ACTIVITY', sql2);
 
-    db.query(sql1, (err) => {
-      db.query(sql2, (err) => {
-        res.redirect(`/projects/issues/${req.params.projectid}`);
-      })
+    db.query(sql1, err => {
+      if (!req.files || Object.keys(req.files).length === 0) {
+        let sql2 = `INSERT INTO issues(projectid,tracker,subject,description,status,priority,assignee,author,startdate,duedate,estimatedtime,done,files,spenttime,targetversion,createddate)
+                    VALUES(${req.params.projectid},'${req.body.tracker}','${req.body.subject}','${req.body.description}','${req.body.status}','${req.body.priority}',${req.body.assignee},(SELECT author FROM projects WHERE projectid = ${req.params.projectid}),'${req.body.startdate}','${req.body.duedate}','${req.body.estimatedtime}',${req.body.done},null,'0','${req.body.targetversion}',NOW())`;
+        if (err) {
+          return res.status(500).send(err);
+        }
+        db.query(sql2, err => {
+          if (err) {
+            res.send(err);
+          }
+          res.redirect(`/projects/issues/${req.params.projectid}`);
+        });
+      } else {
+        let sampleFile = req.files.sampleFile;
+        let nameFile = sampleFile.name.replace(/ /g, "_");
+        nameFile = Date.now() + "_" + nameFile;
+
+        let sql2 = `INSERT INTO issues(projectid,tracker,subject,description,status,priority,assignee,author,startdate,duedate,estimatedtime,done,files,spenttime,targetversion,createddate)
+                    VALUES(${req.params.projectid},'${req.body.tracker}','${req.body.subject}','${req.body.description}','${req.body.status}','${req.body.priority}',${req.body.assignee},(SELECT author FROM projects WHERE projectid = ${req.params.projectid}),'${req.body.startdate}','${req.body.duedate}','${req.body.estimatedtime}',${req.body.done},'${nameFile}','0','${req.body.targetversion}',NOW())`;
+
+        db.query(sql2, err => {
+          console.log("with file", sql2);
+
+          sampleFile.mv(
+            path.join(__dirname, `../public/images/${nameFile}`),
+            function (err) {
+              if (err) {
+                return res.status(500).send(err);
+              }
+              res.redirect(`/projects/issues/${req.params.projectid}`);
+            }
+          );
+        });
+      }
     });
   });
 
   // ISSUES LIST - EDIT ISSUES
-  router.get("/issues/:projectid/:issueid/edit", helpers.isLoggedIn, (req, res, nect) => {
-    res.locals.title = "Project | Edit Issues";
-    let sql1 = `SELECT * FROM issues WHERE issueid = ${req.params.issueid}`;
-    let sql2 = `SELECT userid,email,CONCAT(firstname,' ',lastname) AS fullname FROM users WHERE userid IN (SELECT userid FROM members WHERE projectid = ${req.params.projectid})`;
-    db.query(sql1, (err, data) => {
-      db.query(sql2, (err, users) => {
-        res.render("project/overview/issues/editIssues", {
-          data: data.rows[0],
-          users: users.rows,
-          moment,
-          isadmin: req.session.user.isadmin
+  router.get(
+    "/issues/:projectid/:issueid/edit",
+    helpers.isLoggedIn,
+    (req, res, nect) => {
+      res.locals.title = "Project | Edit Issues";
+      let sql1 = `SELECT * FROM issues WHERE issueid = ${req.params.issueid}`;
+      let sql2 = `SELECT userid,email,CONCAT(firstname,' ',lastname) AS fullname FROM users WHERE userid IN (SELECT userid FROM members WHERE projectid = ${req.params.projectid})`;
+      db.query(sql1, (err, data) => {
+        db.query(sql2, (err, users) => {
+          res.render("project/overview/issues/editIssues", {
+            data: data.rows[0],
+            users: users.rows,
+            moment,
+            isadmin: req.session.user.isadmin
+          });
         });
       });
-    });
-  });
+    }
+  );
 
   // ISSUES LIST - EDIT ISSUES & ADD ACTIVITY - APPLY
-  router.post("/issues/:projectid/:issueid/edit-save", helpers.isLoggedIn, (req, res, next) => {
-    let sql1 = `UPDATE issues SET tracker = '${req.body.tracker}', subject = '${req.body.subject}',
-    description = '${req.body.description}', status = '${req.body.status}', priority = '${req.body.priority}',
-    assignee = ${req.body.assignee}, startdate = '${req.body.startdate}', duedate = '${req.body.duedate}',
-    estimatedtime = '${req.body.estimatedtime}',done = ${req.body.done}, files = '${req.body.file}', spenttime = ${req.body.spenttime}, targetversion = '${req.body.targetversion}', updateddate = NOW() ${req.body.status == "Closed" ? `, closeddate = NOW()`  : ""}  WHERE projectid = ${req.params.projectid} AND issueid = ${req.params.issueid}`;
+  router.post(
+    "/issues/:projectid/:issueid/edit-save",
+    helpers.isLoggedIn,
+    (req, res, next) => {
+      let sql1 = `UPDATE issues SET tracker = '${
+        req.body.tracker
+      }', subject = '${req.body.subject}',
+    description = '${req.body.description}', status = '${
+        req.body.status
+      }', priority = '${req.body.priority}',
+    assignee = ${req.body.assignee}, startdate = '${
+        req.body.startdate
+      }', duedate = '${req.body.duedate}',
+    estimatedtime = '${req.body.estimatedtime}',done = ${
+        req.body.done
+      }, files = '${req.body.file}', spenttime = ${
+        req.body.spenttime
+      }, targetversion = '${req.body.targetversion}', updateddate = NOW() ${
+        req.body.status == "Closed" ? `, closeddate = NOW()` : ""
+      }  WHERE projectid = ${req.params.projectid} AND issueid = ${
+        req.params.issueid
+      }`;
 
-    let sql2 = `INSERT INTO activity(time,title,description,projectid,author)
-    VALUES(NOW(),'${req.body.subject}','${req.body.status == "Closed" ? `Issue was closed : `  : ``}Issue ID : #${req.params.issueid} : [${req.body.tracker}] Subject : ${req.body.subject} - (${req.body.status}) - 
-    Done: ${req.body.done}%.',${req.params.projectid},(SELECT author FROM projects WHERE projectid = ${req.params.projectid}));`;
-    console.log(sql1);
-    db.query(sql1, err => {
-      db.query(sql2, err => {
-        res.redirect(`/projects/issues/${req.params.projectid}`);
+      let sql2 = `INSERT INTO activity(time,title,description,projectid,author)
+    VALUES(NOW(),'${req.body.subject}','${
+        req.body.status == "Closed" ? `Issue was closed : ` : ``
+      }Issue ID : #${req.params.issueid} : [${req.body.tracker}] Subject : ${
+        req.body.subject
+      } - (${req.body.status}) - 
+    Done: ${req.body.done}%.',${
+        req.params.projectid
+      },(SELECT author FROM projects WHERE projectid = ${
+        req.params.projectid
+      }));`;
+      console.log(sql1);
+      db.query(sql1, err => {
+        db.query(sql2, err => {
+          res.redirect(`/projects/issues/${req.params.projectid}`);
+        });
       });
-    });
-  });
+    }
+  );
 
   // ISSUES LIST - DELETE ISSUES
   router.get("/issues/:projectid/:issueid/delete", (req, res, nect) => {

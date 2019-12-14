@@ -1,14 +1,14 @@
 <%- include("./partials/header.ejs", {active: "Edit"}) %>
 
 <div class="container">
-    <h3>Edit Project</h3>
+    <h3>Edit Project #<%= project.projectid %> <%= project.name %></h3>
     <hr>
     <div class="card">
         <div class="card-body">
             <form action="/projects/edit/save/<%= project.projectid %>" method="post">
                 <!-- PROJECT NAME -->
                 <div class="form-group row">
-                    <label for="projectname" class="col-sm-3 col-form-label">Project Name</label>
+                    <label for="projectname" class="col-sm-3 col-form-label">Project Name </label>
                     <div class="col-sm">
                         <input type="text" class="form-control" name="projectname" id="name"
                             value="<%= project.name %>">
