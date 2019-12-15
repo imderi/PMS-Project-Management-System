@@ -11,20 +11,38 @@ module.exports = db => {
     res.locals.title = "Projects";
     res.locals.user = req.session.user;
 
+
     // PAGINATION PART 1
     const url = req.url == '/' ? '/?page=1' : req.url;
     const page = req.query.page || 1;
     const limit = 3;
     const offset = (page - 1) * limit;
 
+    // FILTER PART 1
+    let params = [];
+    // PROJECT ID FILTER
+    if (req.query.projectidcheck && req.query.projectid) {
+      params.push(`projects.projectid = ${req.query.projectid} `)
+    };
+    // PROJECT NAME FILTER
+    if (req.query.namecheck && req.query.name) {
+      params.push(`projects.name LIKE '%${req.query.name.toLowerCase()}%' `)
+    };
+    // PROJECT MEMBER FILTER
+    if (req.query.membercheck && req.query.member) {
+      params.push(`members.userid = ${req.query.member} `)
+    };
+
+
+
     // * QUERY FOR SHOWING DATA TO PROJECTS PAGE
     let sql = `SELECT members.projectid, MAX(projects.name) projectname, STRING_AGG(CONCAT(users.firstname, ' ', users.lastname), ', ') fullname FROM members INNER JOIN projects USING (projectid) INNER JOIN users USING (userid) GROUP BY projectid `;
     db.query(sql, (err, allprojects) => {
-      // PART 2
+      // PAGINATION PART 2
       const total = allprojects.rowCount;
       const pages = Math.ceil(total / limit);
-      
-      // PART 3
+
+      // PAGINATION PART 3
       sql += `ORDER BY projectid LIMIT ${limit} OFFSET ${offset}`
       db.query(sql, (err, projects) => {
         if (err) {
@@ -43,6 +61,20 @@ module.exports = db => {
       })
     });
   });
+  
+  // // PROJECT PAGE TABLE COLUMNS OPTION
+  // router.post("/", helpers.isLoggedIn, (req, res, next) => {
+  //   let saveKey = Object.keys(req.body);
+  //   let saveObject = {
+  //     projectid: saveKey.includes("projectid"),
+  //     projectname: saveKey.includes("projectname"),
+  //     members: saveKey.includes("members")
+  //   };
+
+  //   let option = `UPDATE users SET projectopt`
+
+  //   db.query()
+  // })
 
   // ADD PROJECT
   router.get("/add", helpers.isLoggedIn, (req, res, next) => {
@@ -191,7 +223,7 @@ module.exports = db => {
             supportTotal += 1;
           }
         });
-        
+
         res.render("project/overview/overview", {
           data: data.rows,
           issues: issues.rows,

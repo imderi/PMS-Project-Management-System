@@ -13,13 +13,22 @@ var flash = require('connect-flash')
 // EXPRESS FILE UPLOAD
 const fileUpload = require('express-fileupload');
 
+// // POSTGRE DB CONNECTION
+// const { Pool } = require('pg')
+// const pool = new Pool({
+//     user: 'postgres',
+//     host: 'localhost',
+//     database: 'dbpms',
+//     password: '12345',
+//     port: 5432,
+// })
 // POSTGRE DB CONNECTION
 const { Pool } = require('pg')
 const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'dbpms',
-    password: '12345',
+    user: 'mlqvazslpleont',
+    host: 'ec2-174-129-255-76.compute-1.amazonaws.com',
+    database: 'da0391u4vu9jk1',
+    password: '06b51d362ceaf350ca5fdc1b2bfc0a962e62c621a683c5d87e11e17ac55b0441',
     port: 5432,
 })
 

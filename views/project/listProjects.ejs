@@ -12,33 +12,33 @@
                 <!-- PROJECT ID -->
                 <div class="form-group row">
                     <div class="col-sm-3 custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="idcheck">
-                        <label class="custom-control-label" for="idcheck" name="idcheck">ID</label>
+                        <input type="checkbox" class="custom-control-input" id="projectidcheck" name="projectidcheck" <%= query.projectidcheck ? ' checked' : '' %> >
+                        <label class="custom-control-label" for="projectidcheck" >ID</label>
                     </div>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control float-right" id="inputString" name="id" placeholder="ID">
+                        <input type="text" class="form-control float-right" name="projectid" value="<%= query.projectid %>" placeholder="ID">
                     </div>
                 </div>
 
                 <!-- NAME -->
                 <div class="form-group row">
-                    <div class="col-sm-3 custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="namecheck">
-                        <label class="custom-control-label" for="namecheck" name="namecheck">Name</label>
+                    <div class="col-sm-3 custom-control custom-checkbox" >
+                        <input type="checkbox" class="custom-control-input" id="namecheck"  name="namecheck" <%= query.namecheck ? ' checked' : '' %> >
+                        <label class="custom-control-label" for="namecheck">Name</label>
                     </div>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="inputString" name="name" placeholder="Name">
+                        <input type="text" class="form-control" id="inputString" name="name" value="<%= query.name %>" placeholder="Name">
                     </div>
                 </div>
 
                 <!-- MEMBER -->
                 <div class="form-group row">
                     <div class="col-sm-3 custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="membercheck">
-                        <label class="custom-control-label" for="membercheck" name="membercheck">Member</label>
+                        <input type="checkbox" class="custom-control-input" id="membercheck" name="membercheck" <%= query.membercheck ? ' checked' : '' %> >
+                        <label class="custom-control-label" for="membercheck" >Member</label>
                     </div>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="inputString" name="member" placeholder="Member">
+                        <input type="text" class="form-control" id="inputString" name="member" value="<%= query.member %>" placeholder="Member">
                     </div>
                 </div>
 
