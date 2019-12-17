@@ -25,6 +25,8 @@ const fileUpload = require('express-fileupload');
 // POSTGRE DB CONNECTION
 const { Pool } = require('pg')
 const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
     user: 'szipbwxawkkwux',
     host: 'ec2-107-20-173-2.compute-1.amazonaws.com',
     database: 'dev2ah06sru63e',
