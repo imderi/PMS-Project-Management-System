@@ -12,33 +12,39 @@
                 <!-- PROJECT ID -->
                 <div class="form-group row">
                     <div class="col-sm-3 custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="projectidcheck" name="projectidcheck" <%= query.projectidcheck ? ' checked' : '' %> >
-                        <label class="custom-control-label" for="projectidcheck" >ID</label>
+                        <input type="checkbox" class="custom-control-input" id="projectidcheck" name="projectidcheck"
+                            <%= query.projectidcheck ? ' checked' : '' %>>
+                        <label class="custom-control-label" for="projectidcheck">ID</label>
                     </div>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control float-right" name="projectid" value="<%= query.projectid %>" placeholder="ID">
+                        <input type="text" class="form-control float-right" name="projectid"
+                            value="<%= query.projectid %>" placeholder="ID">
                     </div>
                 </div>
 
                 <!-- NAME -->
                 <div class="form-group row">
-                    <div class="col-sm-3 custom-control custom-checkbox" >
-                        <input type="checkbox" class="custom-control-input" id="namecheck"  name="namecheck" <%= query.namecheck ? ' checked' : '' %> >
+                    <div class="col-sm-3 custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="namecheck" name="namecheck"
+                            <%= query.namecheck ? ' checked' : '' %>>
                         <label class="custom-control-label" for="namecheck">Name</label>
                     </div>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="inputString" name="name" value="<%= query.name %>" placeholder="Name">
+                        <input type="text" class="form-control" id="inputString" name="name" value="<%= query.name %>"
+                            placeholder="Name">
                     </div>
                 </div>
 
                 <!-- MEMBER -->
                 <div class="form-group row">
                     <div class="col-sm-3 custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="membercheck" name="membercheck" <%= query.membercheck ? ' checked' : '' %> >
-                        <label class="custom-control-label" for="membercheck" >Member</label>
+                        <input type="checkbox" class="custom-control-input" id="membercheck" name="membercheck"
+                            <%= query.membercheck ? ' checked' : '' %>>
+                        <label class="custom-control-label" for="membercheck">Member</label>
                     </div>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="inputString" name="member" value="<%= query.member %>" placeholder="Member">
+                        <input type="text" class="form-control" id="inputString" name="member"
+                            value="<%= query.member %>" placeholder="Member">
                     </div>
                 </div>
 
@@ -52,31 +58,37 @@
     <div class="card">
         <h5 class="card-header">Options</h5>
         <div class="card-body">
-            <form action="" method="post">
+            
+            <form action="projects/options" method="post">
                 <div class="form-group row">
                     <!-- OPTIONS TITLE -->
                     <label class="col-sm-3">Columns</label>
                     <!-- OPTIONS CHOICES -->
                     <div class="form-group col-sm-2">
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="idcolumn">
+                            <input type="checkbox" class="custom-control-input" id="idcolumn" name="projectid"
+                                value="true" <%= option.projectid ? ' checked' : '' %>>
                             <label class="custom-control-label" for="idcolumn" name="idcolumn">ID</label>
                         </div>
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="namecolumn">
+                            <input type="checkbox" class="custom-control-input" id="namecolumn" name="projectname"
+                                value="true" <%= option.projectname ? ' checked' : '' %>>
                             <label class="custom-control-label" for="namecolumn" name="namecolumn">Name</label>
                         </div>
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="membercolumn">
+                            <input type="checkbox" class="custom-control-input" id="membercolumn" name="members"
+                                value="true" <%= option.members ? ' checked' : '' %>>
                             <label class="custom-control-label" for="membercolumn" name="membercolumn">Members</label>
                         </div>
                     </div>
                 </div>
-
+                <!-- SUBMIT BUTTON -->
                 <button type="submit" class="btn btn-primary"><i class="fa fa-check-square-o"></i> Apply</button>
             </form>
         </div>
     </div>
+
+
 
     <br>
     <!-- TABLE -->
@@ -84,20 +96,20 @@
         <table class="table table-striped">
             <thead class="thead-dark">
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Members</th>
+                    <%- option.projectid ? `<th>ID</th>` : `` %>
+                    <%- option.projectname ? `<th>Name</th>` : `` %>
+                    <%- option.members ? `<th>Members</th>` : `` %>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <% data.forEach((item, index)=>{ %>
                 <tr>
-                    <td> <a href="/projects/overview/<%= item.projectid %>" class="btn btn-dark">
-                            <%= item.projectid %></a>
-                    </td>
-                    <td> <%= item.projectname %></td>
-                    <td> <%= item.fullname %> </td>
+                    <%- option.projectid ? `<td> <a href="/projects/overview/`+ item.projectid +`" class="btn btn-dark">` + item.projectid + `</a></td>` : `` %>
+                    
+                    <%- option.projectname ? `<td>` + item.projectname + `</td>` : `` %>
+                    <%- option.members ? `<td>` + item.fullname + `</td>` : `` %>
+                    
                     <td>
                         <a href="/projects/edit/<%= item.projectid %>" class="btn btn-success" id=""><i
                                 class="fa fa-edit"></i> Edit</a>
@@ -112,20 +124,24 @@
         </table>
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <!-- PREVIOUS PAGINATION --> 
+                <!-- PREVIOUS PAGINATION -->
                 <li class="page-item<%= pagination.page == 1 ? ' disabled' : '' %>"><a class="page-link"
-                        href="/projects<%= pagination.url.replace(`page=${pagination.page}`, `page=${parseInt(pagination.page) - 1}`); %>"> <i class="fa fa-backward"></i> </a>
+                        href="/projects<%= pagination.url.replace(`page=${pagination.page}`, `page=${parseInt(pagination.page) - 1}`); %>">
+                        <i class="fa fa-backward"></i> </a>
                 </li>
 
                 <% for (var i = 1; i <= pagination.pages; i++) { %>
                 <li class="page-item<%= i == pagination.page ? ' active' : '' %>">
-                    <a class="page-link" href="/projects<%= pagination.url.replace(`page=${pagination.page}`, `page=${i}`); %>"><%= i %></a>
+                    <a class="page-link"
+                        href="/projects<%= pagination.url.replace(`page=${pagination.page}`, `page=${i}`); %>"><%= i %></a>
                 </li>
                 <% } %>
 
-                <!-- NEXT PAGINATION --> 
+                <!-- NEXT PAGINATION -->
                 <li class="page-item<%= pagination.page == pagination.pages ? ' disabled' : '' %>">
-                    <a class="page-link" href="/projects<%= pagination.url.replace(`page=${pagination.page}`, `page=${parseInt(pagination.page) + 1}`); %>"> <i class="fa fa-forward"></i> </a>
+                    <a class="page-link"
+                        href="/projects<%= pagination.url.replace(`page=${pagination.page}`, `page=${parseInt(pagination.page) + 1}`); %>">
+                        <i class="fa fa-forward"></i> </a>
                 </li>
             </ul>
         </nav>

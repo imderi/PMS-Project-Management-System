@@ -34,7 +34,6 @@ module.exports = db => {
     };
 
 
-
     // * QUERY FOR SHOWING DATA TO PROJECTS PAGE
     let sql = `SELECT members.projectid, MAX(projects.name) projectname, STRING_AGG(CONCAT(users.firstname, ' ', users.lastname), ', ') fullname FROM members INNER JOIN projects USING (projectid) INNER JOIN users USING (userid) GROUP BY projectid `;
     db.query(sql, (err, allprojects) => {
@@ -45,36 +44,43 @@ module.exports = db => {
       // PAGINATION PART 3
       sql += `ORDER BY projectid LIMIT ${limit} OFFSET ${offset}`
       db.query(sql, (err, projects) => {
-        if (err) {
-          return res.send(err)
-        }
-        res.render("project/listProjects", {
-          data: projects.rows,
-          isadmin: req.session.user.isadmin,
-          pagination: {
-            pages,
-            page,
-            url
-          },
-          query: req.query
-        });
+        // COLUMNS OPTION PART 1
+        let tableoption = `SELECT projectopt FROM users WHERE userid = ${req.session.user.userid}`
+        db.query(tableoption, (err, option)=>{
+          // console.log(option.rows[0].projectopt);
+          
+          res.render("project/listProjects", {
+            data: projects.rows,
+            isadmin: req.session.user.isadmin,
+            pagination: {
+              pages,
+              page,
+              url
+            },
+            query: req.query,
+            // COLUMNS OPTION PART 2
+            option: option.rows[0].projectopt
+          });
+        })
       })
     });
   });
   
-  // // PROJECT PAGE TABLE COLUMNS OPTION
-  // router.post("/", helpers.isLoggedIn, (req, res, next) => {
-  //   let saveKey = Object.keys(req.body);
-  //   let saveObject = {
-  //     projectid: saveKey.includes("projectid"),
-  //     projectname: saveKey.includes("projectname"),
-  //     members: saveKey.includes("members")
-  //   };
 
-  //   let option = `UPDATE users SET projectopt`
-
-  //   db.query()
-  // })
+  // PROJECT PAGE - TABLE - COLUMNS OPTION PART 3
+  router.post("/options", helpers.isLoggedIn, (req, res, next) => {
+    let saveKey = Object.keys(req.body);
+    
+    let saveObject = {
+      projectid: saveKey.includes("projectid"),
+      projectname: saveKey.includes("projectname"),
+      members: saveKey.includes("members")
+    };
+    let option = `UPDATE users SET projectopt='${JSON.stringify(saveObject)}' WHERE userid=${req.session.user.userid}`;
+    db.query(option, (err)=>{
+      res.redirect("/projects")
+    })
+  })
 
   // ADD PROJECT
   router.get("/add", helpers.isLoggedIn, (req, res, next) => {
@@ -112,7 +118,6 @@ module.exports = db => {
           ","
         )}`;
         db.query(sqlsave, (err, data) => {
-          // console.log(sqlsave);
           res.redirect("/projects");
         });
       });
@@ -124,13 +129,19 @@ module.exports = db => {
     res.locals.title = "Edit Project";
     let sql1 = `SELECT * FROM projects WHERE projectid = ${req.params.projectid}`;
     let sql2 = `SELECT * FROM users`;
+    let sql3 = `SELECT * FROM members WHERE projectid = ${req.params.projectid}`;
     db.query(sql1, (err, project) => {
       db.query(sql2, (err, member) => {
-        res.render("project/editProject", {
-          project: project.rows[0],
-          members: member.rows,
-          isadmin: req.session.user.isadmin
-        });
+        db.query(sql3, (err, ismember)=>{
+          console.log(ismember.rows.map(item => item.userid));
+        
+          res.render("project/editProject", {
+            project: project.rows[0],
+            members: member.rows,
+            ismember: ismember.rows.map(item => item.userid),
+            isadmin: req.session.user.isadmin
+          });
+        })
       });
     });
   });

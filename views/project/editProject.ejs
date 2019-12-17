@@ -23,7 +23,7 @@
                         <% members.forEach((member, index)=>{ %>
                         <div class="custom-control custom-checkbox">
                             <input class="custom-control-input" type="checkbox" name="member" id="<%= member.userid%>"
-                                value="<%= member.userid%>" />
+                                value="<%= member.userid%>" <%= ismember.includes(member.userid) ? ' checked' : '' %>/>
                             <label class="custom-control-label"
                                 for="<%= member.userid%>"><%= member.firstname + member.lastname %></label>
                         </div>
